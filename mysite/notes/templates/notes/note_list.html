@@ -8,6 +8,12 @@
     <link rel="stylesheet" href="{% static 'notes/style.css' %}?v={{ timestamp }}">
 </head>
 <body>
+    {% if user.is_authenticated %}
+    <p>Xin chào {{ user.username }} | <a href="{% url 'logout' %}">Đăng xuất</a></p>
+    {% else %}
+    <p><a href="{% url 'login' %}">Đăng nhập</a> | <a href="{% url 'register' %}">Đăng ký</a></p>
+    {% endif %}
+
     <h1>Danh sách ghi chú</h1>
     <ul>
         {% for note in notes %}
@@ -25,5 +31,6 @@
         {{ form.as_p }}
         <button type="submit">Thêm Ghi chú</button>
     </form>
+    
 </body>
 </html>
