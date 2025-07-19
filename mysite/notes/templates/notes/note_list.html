@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'notes/style.css' %}?v={{ timestamp }}">
+</head>
+<body>
+    <h1>Danh sách ghi chú</h1>
+    <ul>
+        {% for note in notes %}
+            <li>
+                <strong>{{ note.title }}</strong>: {{ note.content }}
+                <a href="{% url "delete_note" note.id %}" onclick="return confirm('Bạn có chắc muốn xóa ghi chú này không?')">[Xóa]</a>
+                <a href="{% url "edit_note" note.id %}">[Chỉnh sửa]</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Thêm ghi chú mới</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Thêm Ghi chú</button>
+    </form>
+</body>
+</html>
